@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folder Content Parser</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Folder Content Parser</h1>
+      <label class="upload-label">
+        📁 Select Folder
+        <input
+          type="file"
+          id="folderInput"
+          webkitdirectory
+          directory
+          multiple
+        />
+      </label>
+      <div id="resultContainer" class="hidden">
+        <pre id="output"></pre>
+        <button id="copyButton">Copy to Clipboard</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
