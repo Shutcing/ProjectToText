@@ -7,6 +7,7 @@ const resultContainer = document.getElementById("resultContainer");
 
 const textFileExtensions = new Set([
   "txt",
+  "cs",
   "css",
   "js",
   "py",
