@@ -32,6 +32,8 @@ const textFileExtensions = new Set([
   "go",
   "kt",
   "sql",
+  "jsx",
+  "tsx"
 ]);
 
 let fileStructure = [];
