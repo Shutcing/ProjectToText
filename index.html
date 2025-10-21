@@ -9,17 +9,9 @@
   <body>
     <div class="container">
       <h1>Folder Content Parser</h1>
-      <label class="upload-label">
-        📁 Select Folder
-        <input
-          type="file"
-          id="folderInput"
-          webkitdirectory
-          directory
-          multiple
-          accept=".txt,.cs,.css,.js,.py,.html,.json,.md,.xml,.csv,.ini,.yml,.yaml,.sh,.bat,.php,.java,.c,.cpp,.h,.hpp,.ts,.rs,.go,.kt,.sql,.jsx,.tsx"
-        />
-      </label>
+      <button type="button" id="folderButton" class="upload-label">
+        Choose Folder
+      </button>
       <div id="fileTree" class="hidden"></div>
       <div id="resultContainer" class="hidden">
         <pre id="output"></pre>
