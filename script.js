@@ -41,9 +41,17 @@ let selectedFiles = new Map();
 
 let allFilesMap = new Map();
 
+let selectionRect = null;
+let isSelecting = false;
+let startX, startY;
+
 folderButton.addEventListener("click", handleFolderUpload);
 generateButton.addEventListener("click", generateOutput);
 copyButton.addEventListener("click", copyToClipboard);
+
+fileTree.addEventListener("mousedown", handleMouseDown);
+document.addEventListener("mousemove", handleMouseMove);
+document.addEventListener("mouseup", handleMouseUp);
 
 async function handleFolderUpload() {
   try {
@@ -285,5 +293,77 @@ async function copyToClipboard() {
     }, 2000);
   } catch (err) {
     console.error("Failed to copy:", err);
+  }
+}
+
+function handleMouseDown(e) {
+  if (e.ctrlKey && e.button === 0) {
+    isSelecting = true;
+    startX = e.clientX;
+    startY = e.clientY;
+
+    if (!selectionRect) {
+      selectionRect = document.createElement("div");
+      selectionRect.style.cssText = `
+        position: fixed;
+        border: 2px dashed #007acc;
+        background: rgba(0, 122, 204, 0.1);
+        pointer-events: none;
+        z-index: 1000;
+        display: none;
+      `;
+      document.body.appendChild(selectionRect);
+    }
+
+    selectionRect.style.left = startX + "px";
+    selectionRect.style.top = startY + "px";
+    selectionRect.style.width = "0px";
+    selectionRect.style.height = "0px";
+    selectionRect.style.display = "block";
+
+    e.preventDefault();
+  }
+}
+
+function handleMouseMove(e) {
+  if (!isSelecting) return;
+
+  const currentX = e.clientX;
+  const currentY = e.clientY;
+
+  const left = Math.min(startX, currentX);
+  const top = Math.min(startY, currentY);
+  const width = Math.abs(currentX - startX);
+  const height = Math.abs(currentY - startY);
+
+  selectionRect.style.left = left + "px";
+  selectionRect.style.top = top + "px";
+  selectionRect.style.width = width + "px";
+  selectionRect.style.height = height + "px";
+}
+
+function handleMouseUp(e) {
+  if (isSelecting && e.button === 0) {
+    isSelecting = false;
+    const rect = selectionRect.getBoundingClientRect();
+    selectionRect.style.display = "none";
+
+    const checkboxes = fileTree.querySelectorAll(
+      'input[type="checkbox"]:checked'
+    );
+
+    checkboxes.forEach((checkbox) => {
+      const checkboxRect = checkbox.getBoundingClientRect();
+
+      if (
+        rect.left <= checkboxRect.right &&
+        rect.right >= checkboxRect.left &&
+        rect.top <= checkboxRect.bottom &&
+        rect.bottom >= checkboxRect.top
+      ) {
+        checkbox.checked = false;
+        checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
   }
 }

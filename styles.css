@@ -72,7 +72,8 @@ input[type="file"] {
   gap: 8px;
 }
 
-.folder-header .folder-name, .folder-header .folder-icon {
+.folder-header .folder-name,
+.folder-header .folder-icon {
   cursor: pointer;
 }
 .folder-header .folder-name:hover {
@@ -123,7 +124,7 @@ input[type="checkbox"] {
 #output {
   background-color: #2d2d2d; /* Темный фон для кода */
   color: #f8f8f2; /* Светлый текст */
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -151,4 +152,9 @@ input[type="checkbox"] {
 #copyButton:hover,
 .generate-button:hover {
   background-color: #45a049;
+}
+
+#fileTree {
+  position: relative;
+  user-select: none;
 }
